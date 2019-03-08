@@ -1,4 +1,5 @@
 const promise = require('bluebird')
+const bcrypt = require('bcrypt')
 const options = {
   promiseLib: promise
 }
@@ -12,7 +13,14 @@ db.connect();
 // add a user
 
 const newUser = (req,res) => {
- console.log(req);
+ req.body.password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
+ db.none('INSERT INTO users (username, password) VALUES(${username}, ${password})', req.body)
+ .then(() => {
+   res.status(200).json({message: 'user made'})
+ })
+ .catch((err) => {
+   console.log(err);
+ })
 }
 
 
@@ -30,5 +38,6 @@ const seeUser = (req,res) => {
 
 
 module.exports = {
-  seeUser: seeUser
+  seeUser: seeUser,
+  newUser
 }

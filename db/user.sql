@@ -6,7 +6,7 @@ CREATE DATABASE chat_app;
 CREATE TABLE users (
   ID SERIAL PRIMARY KEY,
   username VARCHAR(32),
-  password VARCHAR(32),
+  password TEXT,
   pic TEXT
 );
 
