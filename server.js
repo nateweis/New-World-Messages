@@ -28,6 +28,8 @@ app.use(session({
 //              Controllers
 // =======================================
 
+const userController = require('./controllers/userRoutes.js')
+app.use('/users', userController);
 
 
 
@@ -49,5 +51,5 @@ io.on('connection',(socket) => {
 
 
 server.listen(port,() => {
-  console.log("Listening withi io");
+  console.log("Listening port alone");
 })
