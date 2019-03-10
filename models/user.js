@@ -1,15 +1,5 @@
-const promise = require('bluebird')
 const bcrypt = require('bcrypt')
-const options = {
-  promiseLib: promise
-}
-
-
-const pgp = require('pg-promise')(options);
-const connectionString = 'postgres://localhost:5432/chat_app';
-const db = pgp(connectionString);
-db.connect();
-
+const db = require('../db/db_connection.js')
 // add a user
 
 const newUser = (req,res) => {
@@ -47,9 +37,23 @@ const addToContacts = (req,res) => {
   })
 }
 
+// look at your contact list
+const viewContacts = (req,res) => {
+  db.any('SELECT contacts.* FROM users JOIN contacts ON users.id = contacts.user_id WHERE users.id = $1', req.params.id)
+  .then((data) => {
+    res.json(data)
+  })
+  .catch((er) => {
+    console.log(err);
+  })
+}
+
 
 module.exports = {
   newUser,
   allUsers,
-  addToContacts
+  addToContacts,
+  viewContacts
 }
+
+//

@@ -1,14 +1,5 @@
-const promise = require('bluebird')
 const bcrypt = require('bcrypt')
-const session = require('express-session')
-const options = {
-  promiseLib: promise
-}
-
-
-const pgp = require('pg-promise')(options);
-const connectionString = 'postgres://localhost:5432/chat_app';
-const db = pgp(connectionString);
+const db = require('../db/db_connection.js')
 
 
 // DELETE SESSION
