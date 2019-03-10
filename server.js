@@ -5,6 +5,7 @@ const express = require('express');
 const http = require('http')
 const socketIo = require('socket.io')
 const session = require('express-session')
+const cors = require('cors')
 
 const app = express()
 const server = http.createServer(app)
@@ -16,8 +17,9 @@ const port = process.env.PORT || 3000;
 //              Middleware
 // =======================================
 
+app.use(cors())
 app.use(express.json())
-app.use(express.static('public'));
+// app.use(express.static('public'));
 app.use(session({
   secret: 'istillneverdidthankyoucardsfrommywedding',
   resave: false,

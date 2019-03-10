@@ -4,7 +4,7 @@ const User = require('../models/user.js')
 
 
 // get rout for testing
-router.get('/', User.seeUser);
+
 router.post('/', User.newUser);
 
 

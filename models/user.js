@@ -26,18 +26,9 @@ const newUser = (req,res) => {
 
 // see user info
 
-const seeUser = (req,res) => {
-  db.any('SELECT * FROM users')
-  .then((data) => {
-    res.json({data:data})
-  })
-  .catch((err) => {
-    console.log(err);
-  })
-}
+
 
 
 module.exports = {
-  seeUser: seeUser,
   newUser
 }

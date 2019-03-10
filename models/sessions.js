@@ -1,5 +1,6 @@
 const promise = require('bluebird')
 const bcrypt = require('bcrypt')
+const session = require('express-session')
 const options = {
   promiseLib: promise
 }
@@ -29,6 +30,7 @@ const login = (req,res) => {
       if(bcrypt.compareSync(req.body.password, data.password)){
         req.session.currentUser = data;
         res.status(201).json({message:"user logged in"})
+
       }
       else{
         res.status(401).json({message:"wrong username/password"})
@@ -37,8 +39,23 @@ const login = (req,res) => {
   })
 }
 
+const getUser = (req,res) => {
+  console.log(req.session.currentUser);
+  if(req.session.currentUser){
+    db.any('SELECT * FROM users WHERE id = $1',req.session.currentUser._id)
+    .then((data) => {
+      console.log(data);
+      res.json({data:data})
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  }
+}
+
 
 module.exports ={
   login,
-  logout
+  logout,
+  getUser
 }
