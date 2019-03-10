@@ -35,7 +35,7 @@ const getUser = (req,res) => {
     db.one('SELECT * FROM users WHERE id = $1',[req.session.currentUser.id])
     .then((data) => {
       console.log(data);
-      res.json({data:data})
+      res.json(data)
     })
     .catch((err) => {
       console.log(err);
