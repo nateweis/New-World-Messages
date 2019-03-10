@@ -6,6 +6,7 @@ const User = require('../models/user.js')
 // get rout for testing
 router.get('/:username', User.allUsers)
 router.post('/', User.newUser);
+router.post('/contacts', User.addToContacts);
 
 
 
