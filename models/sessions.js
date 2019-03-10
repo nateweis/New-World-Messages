@@ -42,7 +42,7 @@ const login = (req,res) => {
 const getUser = (req,res) => {
   console.log(req.session.currentUser);
   if(req.session.currentUser){
-    db.any('SELECT * FROM users WHERE id = $1',req.session.currentUser._id)
+    db.one('SELECT * FROM users WHERE id = $1',req.session.currentUser._id)
     .then((data) => {
       console.log(data);
       res.json({data:data})

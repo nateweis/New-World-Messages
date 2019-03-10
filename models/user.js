@@ -26,9 +26,18 @@ const newUser = (req,res) => {
 
 // see user info
 
-
+const allUsers = (req,res) => {
+  db.any('SELECT * FROM users WHERE username = $1',req.body.username)
+  .then((data) => {
+    res.json({info: data})
+  })
+  .catch((err) => {
+      console.log(err);
+  })
+}
 
 
 module.exports = {
-  newUser
+  newUser,
+  allUsers
 }
