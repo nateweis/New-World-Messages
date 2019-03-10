@@ -16,8 +16,22 @@ const port = process.env.PORT || 3000;
 // =======================================
 //              Middleware
 // =======================================
+// var whitelist = ['http://example1.com', 'http://example2.com']
+// var corsOptions = {
+//   origin: function (origin, callback) {
+//     if (true) {
+//       callback(null, true)
+//     } else {
+//       callback(new Error('Not allowed by CORS'))
+//     }
+//   }
+// }
 
-app.use(cors())
+const corsOption = {
+  origin:'http://localhost:3001',
+  credentials: true
+}
+app.use(cors(corsOption))
 app.use(express.json())
 // app.use(express.static('public'));
 app.use(session({
