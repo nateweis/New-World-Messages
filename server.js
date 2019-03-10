@@ -31,6 +31,9 @@ app.use(session({
 const userController = require('./controllers/userRoutes.js')
 app.use('/users', userController);
 
+const sessionsController = require('./controllers/sessionsRoutes.js')
+app.use('/sessions', sessionsController);
+
 
 
 // =======================================
