@@ -50,6 +50,9 @@ app.use('/users', userController);
 const sessionsController = require('./controllers/sessionsRoutes.js')
 app.use('/sessions', sessionsController);
 
+const chatController = require('./controllers/chatRoutes.js')
+app.use('/chats', chatController)
+
 
 
 // =======================================
