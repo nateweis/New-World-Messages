@@ -2,7 +2,7 @@ const db = require('../db/db_connection.js')
 
 // adding a new chat to the db with the creater part of it
 const newChat = (req,res) => {
-  db.none('INSERT INTO  chats (chat,admin) VALUES ($1 , true)',
+  db.one('INSERT INTO  chats (chat,admin) VALUES ($1 , true)',
   req.body.name)
   .then((data) => {
     res.status(202).json(getNewChatsId(req.body.user_id))
@@ -37,6 +37,19 @@ const combineUserToNewChat = (chat_id, user_id) => {
 })
 }
 
+  const getUsersChats = (req,res) => {
+    db.any('SELECT users.*, chats.chat, chats.admin FROM users JOIN chat_users ON users.id = chat_users.user_id JOIN chats ON chat_users.chat_id = chats.id WHERE users.id = $1',
+  req.params.id)
+    .then((data) => {
+      res.status(200).json(data)
+    })
+    .catch((err) => {
+      console.log(err);
+      console.log("somthing wrong with getting user chats on backend");
+    })
+  }
+
 module.exports = {
-  newChat
+  newChat,
+  getUsersChats
 }

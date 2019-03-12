@@ -20,7 +20,7 @@ CREATE TABLE contacts (
 CREATE TABLE chats(
   id SERIAL PRIMARY KEY,
   chat VARCHAR (32),
-  admit BOOL
+  admin BOOL
 );
 
 CREATE TABLE chat_users(
