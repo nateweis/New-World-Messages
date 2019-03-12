@@ -63,8 +63,15 @@ app.use('/chats', chatController)
 io.on('connection',(socket) => {
   console.log("fired a socket event", socket.id);
 
-  socket.on("chat",(data) => {
-    io.sockets.emit('message',data)
+  let currentRoom = ""
+
+  socket.on('room',(room) => {
+    currentRoom = room
+    socket.join(room)
+  })
+
+  socket.on('message',(newMessage) => {
+    io.to(currentRoom).emit('chat', newMessage)
   })
 
 
