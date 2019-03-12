@@ -63,7 +63,7 @@ app.use('/chats', chatController)
 io.on('connection',(socket) => {
   console.log("fired a socket event", socket.id);
 
-  let currentRoom = ""
+  let currentRoom = "nothing"
 
   socket.on('room',(room) => {
     currentRoom = room
