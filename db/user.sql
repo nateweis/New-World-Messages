@@ -7,6 +7,7 @@ CREATE TABLE users (
   ID SERIAL PRIMARY KEY,
   username VARCHAR(32),
   password TEXT,
+  current_room INT,
   pic TEXT
 );
 
@@ -27,6 +28,14 @@ CREATE TABLE chat_users(
   user_id INT,
   admin BOOL,
   chat_id INT
+);
+
+CREATE TABLE messages(
+  id SERIAL PRIMARY KEY,
+  chat_id INT,
+  user_id INT,
+  sender VARCHAR(32),
+  message TEXT
 );
 
 INSERT INTO users (username, password, pic) VALUES('Nate','1234','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3fMBG8wXUQwn9RaAq_XfkCCl-gdYwiXbghImsfdojEgHOP8RQUg');

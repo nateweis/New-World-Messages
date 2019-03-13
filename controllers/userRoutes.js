@@ -8,6 +8,7 @@ router.get('/contacts/:id', User.viewContacts);
 router.get('/:username', User.allUsers)
 router.post('/', User.newUser);
 router.post('/contacts', User.addToContacts);
+router.put('/changeRoom', User.changeRoom)
 
 
 

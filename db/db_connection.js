@@ -8,4 +8,5 @@ const connectionString = 'postgres://localhost:5432/chat_app';
 const db = pgp(connectionString);
 db.connect();
 
+
 module.exports = db

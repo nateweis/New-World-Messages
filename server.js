@@ -6,6 +6,7 @@ const http = require('http')
 const socketIo = require('socket.io')
 const session = require('express-session')
 const cors = require('cors')
+const db = require('./db/db_connection.js')
 
 const app = express()
 const server = http.createServer(app)
@@ -53,10 +54,13 @@ app.use('/sessions', sessionsController);
 const chatController = require('./controllers/chatRoutes.js')
 app.use('/chats', chatController)
 
+const messageController = require('./controllers/messageRoute.js')
+app.use('/messages', messageController)
+
 
 
 // =======================================
-//              Listeners
+//            Socket Listeners
 // =======================================
 
 
@@ -65,13 +69,28 @@ io.on('connection',(socket) => {
 
   let currentRoom = "nothing"
 
+  socket.on('leave',(room) => {
+    socket.leave(room)
+  })
+
   socket.on('room',(room) => {
     currentRoom = room
     socket.join(room)
   })
 
   socket.on('message',(newMessage) => {
-    io.to(currentRoom).emit('chat', newMessage)
+    db.none('INSERT INTO messages (chat_id,sender,message,user_id) VALUES (${chat_id},${sender},${msg},${user_id})', newMessage)
+    .then(() => {
+      db.one('SELECT * FROM messages ORDER BY id DESC LIMIT 1;')
+      .then((data) => {
+        console.log(data);
+        io.to(currentRoom).emit('chat', data)
+      })
+      .catch((err) => {
+        console.log(err);
+        console.log("new message retrive isnt working");
+      })
+    })
   })
 
 
