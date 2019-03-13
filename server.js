@@ -69,6 +69,10 @@ io.on('connection',(socket) => {
 
   let currentRoom = "nothing"
 
+  socket.on('leave',(room) => {
+    socket.leave(room)
+  })
+
   socket.on('room',(room) => {
     currentRoom = room
     socket.join(room)
