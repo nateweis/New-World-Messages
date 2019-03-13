@@ -29,7 +29,7 @@ const port = process.env.PORT || 3000;
 // }
 
 const corsOption = {
-  origin:'*',
+  origin:'https://nwmessages.herokuapp.com/',
   credentials: true
 }
 app.use(cors(corsOption))
