@@ -14,17 +14,18 @@ CREATE TABLE contacts (
   ID SERIAL PRIMARY KEY,
   username VARCHAR(32),
   user_id INT,
+  contact_id INT,
   pic TEXT
 );
 
 CREATE TABLE chats(
   id SERIAL PRIMARY KEY,
-  chat VARCHAR (32),
-  admin BOOL
+  chat VARCHAR (32)
 );
 
 CREATE TABLE chat_users(
   user_id INT,
+  admin BOOL,
   chat_id INT
 );
 

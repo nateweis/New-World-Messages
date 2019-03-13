@@ -27,7 +27,7 @@ const allUsers = (req,res) => {
 
 // addUser To Contacts List
 const addToContacts = (req,res) => {
-  db.none('INSERT INTO contacts (username,user_id,pic) VALUES(${username},${user_id},${pic})',
+  db.none('INSERT INTO contacts (username,user_id,pic,contact_id) VALUES(${username},${user_id},${pic},${contact_id})',
   req.body)
   .then((data) => {
     res.json({message:"added to contacts"})
