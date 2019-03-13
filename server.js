@@ -54,10 +54,13 @@ app.use('/sessions', sessionsController);
 const chatController = require('./controllers/chatRoutes.js')
 app.use('/chats', chatController)
 
+const messageController = require('./controllers/messageRoute.js')
+app.use('/messages', messageController)
+
 
 
 // =======================================
-//              Listeners
+//            Socket Listeners
 // =======================================
 
 

@@ -48,12 +48,25 @@ const viewContacts = (req,res) => {
   })
 }
 
+// change the users current room
+const changeRoom = (req,res) => {
+  db.none('UPDATE users SET current_room = $1 WHERE id = $2',
+  [req.body.chat_id, req.body.id])
+  .then(() => {
+    res.json({message:"user room changed"})
+  })
+  .catch(() => {
+    console.log("Somthing wrong with the room change");
+  })
+}
+
 
 module.exports = {
   newUser,
   allUsers,
   addToContacts,
-  viewContacts
+  viewContacts,
+  changeRoom
 }
 
 //

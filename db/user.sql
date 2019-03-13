@@ -7,6 +7,7 @@ CREATE TABLE users (
   ID SERIAL PRIMARY KEY,
   username VARCHAR(32),
   password TEXT,
+  current_room INT,
   pic TEXT
 );
 
