@@ -70,8 +70,25 @@ const combineUserToNewChat = (chat_id, user_id ,res) => {
     }
   }
 
+  // removing chat alltogether
+  const removeChat = (req,res) => {
+    db.none('DELETE FROM chats WHERE id = $1', req.params.id)
+    .then(() => {
+      db.none('DELETE FROM chat_users WHERE chat_id = $1', req.params.id)
+      .then(() => {
+        res.status(200).json({message:"removed chat"})
+      })
+      .catch(() => {
+        console.log("somting wrong in remove chat");
+      })
+    })
+  }
+
+
+
 module.exports = {
   newChat,
   getUsersChats,
-  addManyUsers
+  addManyUsers,
+  removeChat
 }
