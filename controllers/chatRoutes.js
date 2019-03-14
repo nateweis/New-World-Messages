@@ -6,5 +6,6 @@ router.post('/', Chat.newChat)
 router.post('/many', Chat.addManyUsers)
 router.get('/:id', Chat.getUsersChats)
 router.delete('/:id', Chat.removeChat)
+router.put('/', Chat.renameChat)
 
 module.exports = router

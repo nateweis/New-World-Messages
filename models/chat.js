@@ -84,11 +84,25 @@ const combineUserToNewChat = (chat_id, user_id ,res) => {
     })
   }
 
+  const renameChat = (req,res) => {
+    db.none('UPDATE chats SET chat = ${chat} WHERE id = ${id}', req.body)
+    .then(() => {
+      res.status(200).json({message:"name changed"})
+    })
+    .catch((err) => {
+      res.status(500).json({
+        err: err,
+        message:"error updating chat name "
+      })
+    })
+  }
+
 
 
 module.exports = {
   newChat,
   getUsersChats,
   addManyUsers,
-  removeChat
+  removeChat,
+  renameChat
 }
