@@ -6,7 +6,7 @@ const http = require('http')
 const socketIo = require('socket.io')
 const session = require('express-session')
 const cors = require('cors')
-const db = require('./db/db_connection.js')
+// const db = require('./db/db_connection.js')
 
 const app = express()
 const server = http.createServer(app)
