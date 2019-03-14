@@ -1,7 +1,7 @@
 const db = require('../db/db_connection.js')
 
 const getRoomsMessages = (req,res) => {
-  db.any('SELECT * FROM messages WHERE chat_id = $1', req.params.room)
+  db.any('SELECT * FROM messages')
   .then((data) => {
     res.status(200).json(data)
   })
