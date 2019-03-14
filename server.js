@@ -64,37 +64,37 @@ app.use('/messages', messageController)
 // =======================================
 
 
-io.on('connection',(socket) => {
-  console.log("fired a socket event", socket.id);
-
-  let currentRoom = "nothing"
-
-  socket.on('leave',(room) => {
-    socket.leave(room)
-  })
-
-  socket.on('room',(room) => {
-    currentRoom = room
-    socket.join(room)
-  })
-
-  socket.on('message',(newMessage) => {
-    db.none('INSERT INTO messages (chat_id,sender,message,user_id) VALUES (${chat_id},${sender},${msg},${user_id})', newMessage)
-    .then(() => {
-      db.one('SELECT * FROM messages ORDER BY id DESC LIMIT 1;')
-      .then((data) => {
-        console.log(data);
-        io.to(currentRoom).emit('chat', data)
-      })
-      .catch((err) => {
-        console.log(err);
-        console.log("new message retrive isnt working");
-      })
-    })
-  })
-
-
-})
+// io.on('connection',(socket) => {
+//   console.log("fired a socket event", socket.id);
+//
+//   let currentRoom = "nothing"
+//
+//   socket.on('leave',(room) => {
+//     socket.leave(room)
+//   })
+//
+//   socket.on('room',(room) => {
+//     currentRoom = room
+//     socket.join(room)
+//   })
+//
+//   socket.on('message',(newMessage) => {
+//     db.none('INSERT INTO messages (chat_id,sender,message,user_id) VALUES (${chat_id},${sender},${msg},${user_id})', newMessage)
+//     .then(() => {
+//       db.one('SELECT * FROM messages ORDER BY id DESC LIMIT 1;')
+//       .then((data) => {
+//         console.log(data);
+//         io.to(currentRoom).emit('chat', data)
+//       })
+//       .catch((err) => {
+//         console.log(err);
+//         console.log("new message retrive isnt working");
+//       })
+//     })
+//   })
+//
+//
+// })
 
 
 
