@@ -4,7 +4,7 @@ const options = {
 }
 
 const pgp = require('pg-promise')(options);
-const connectionString = process.ENV.DATABASE_URL ||'postgres://localhost:5432/chat_app';
+const connectionString = process.env.DATABASE_URL ||'postgres://localhost:5432/chat_app';
 const db = pgp(connectionString);
 db.connect();
 
