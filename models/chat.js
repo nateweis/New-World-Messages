@@ -114,6 +114,25 @@ const combineUserToNewChat = (chat_id, user_id ,res) => {
     })
   }
 
+  // kick member out of chat room
+  const kickOutOfChat = (req,res) => {
+    db.none('DELETE FROM chat_users WHERE user_id = $1 AND chat_id = $2',
+    [req.body.user,req.body.chat])
+    .then(() => {
+      res.status(200).json({
+        message:"delete Successfull",
+        status: 200
+      })
+    })
+    .catch((err) => {
+      res.status(500).json({
+        message:"problem removing user",
+        status:500,
+        err:err
+      })
+    })
+  }
+
 
 
 module.exports = {
@@ -122,5 +141,6 @@ module.exports = {
   addManyUsers,
   removeChat,
   renameChat,
-  getChatParticipants
+  getChatParticipants,
+  kickOutOfChat
 }
