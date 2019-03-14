@@ -84,6 +84,7 @@ const combineUserToNewChat = (chat_id, user_id ,res) => {
     })
   }
 
+  // renaming the chat
   const renameChat = (req,res) => {
     db.none('UPDATE chats SET chat = ${chat} WHERE id = ${id}', req.body)
     .then(() => {
@@ -97,6 +98,22 @@ const combineUserToNewChat = (chat_id, user_id ,res) => {
     })
   }
 
+  // getting the members of the chats info
+  const getChatParticipants = (req,res) => {
+    db.any('SELECT users.* FROM users JOIN chat_users ON users.id = chat_users.user_id WHERE chat_users.chat_id = $1',
+    req.params.id)
+    .then((data) => {
+      res.status(200).json(data)
+    })
+    .catch((err) => {
+      ses.status(500).json({
+        err: err,
+        message: "couldnt get the members of the chat ",
+        status: 500
+      })
+    })
+  }
+
 
 
 module.exports = {
@@ -104,5 +121,6 @@ module.exports = {
   getUsersChats,
   addManyUsers,
   removeChat,
-  renameChat
+  renameChat,
+  getChatParticipants
 }
