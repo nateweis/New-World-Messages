@@ -45,17 +45,17 @@ app.use(session({
 //              Controllers
 // =======================================
 
-// const userController = require('./controllers/userRoutes.js')
-// app.use('/users', userController);
-//
-// const sessionsController = require('./controllers/sessionsRoutes.js')
-// app.use('/sessions', sessionsController);
-//
-// const chatController = require('./controllers/chatRoutes.js')
-// app.use('/chats', chatController)
-//
-// const messageController = require('./controllers/messageRoute.js')
-// app.use('/messages', messageController)
+const userController = require('./controllers/userRoutes.js')
+app.use('/users', userController);
+
+const sessionsController = require('./controllers/sessionsRoutes.js')
+app.use('/sessions', sessionsController);
+
+const chatController = require('./controllers/chatRoutes.js')
+app.use('/chats', chatController)
+
+const messageController = require('./controllers/messageRoute.js')
+app.use('/messages', messageController)
 
 
 
