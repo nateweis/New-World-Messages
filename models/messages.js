@@ -34,16 +34,20 @@ const editOneMessage = (req,res) => {
   db.none('UPDATE messages SET message = $1 WHERE id = $2',
   [req.body.edit, req.params.id])
   .then(() => {
-    res.json({
-      message:"message edited",
-      status:200
+    db.one('SELECT * FROM messages WHERE id = $1', req.params.id)
+    .then((data) => {
+      res.json({
+        message:"message edited",
+        status:200,
+        data:data
+      })
     })
-  })
-  .catch((err) => {
-    res.json({
-      err:err,
-      message: "edit message failed",
-      status: 500
+    .catch((err) => {
+      res.json({
+        err:err,
+        message: "edit message failed",
+        status: 500
+      })
     })
   })
 }
