@@ -91,12 +91,21 @@ const combineUserToNewChat = (chat_id, user_id ,res) => {
   const renameChat = (req,res) => {
     db.none('UPDATE chats SET chat = ${chat} WHERE id = ${id}', req.body)
     .then(() => {
-      res.status(200).json({message:"name changed"})
-    })
-    .catch((err) => {
-      res.status(500).json({
-        err: err,
-        message:"error updating chat name "
+      db.one('SELECT users.*, chats.chat, chat_users.admin, chat_users.chat_id FROM users JOIN chat_users ON users.id = chat_users.user_id JOIN chats ON chat_users.chat_id = chats.id WHERE chats.id = $1;',
+      req.body.id)
+      .then((data) => {
+        res.json({
+          status:200,
+          message:'Successfull',
+          data:data
+        })
+      })
+      .catch((err) => {
+        res.json({
+          status:500,
+          err:err,
+          message:"in renameChat"
+        })
       })
     })
   }
@@ -135,6 +144,7 @@ const combineUserToNewChat = (chat_id, user_id ,res) => {
       })
     })
   }
+
 
 
 

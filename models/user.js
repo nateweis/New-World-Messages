@@ -60,13 +60,32 @@ const changeRoom = (req,res) => {
   })
 }
 
+const updateProfile = (req,res) => {
+  db.none('UPDATE users SET pic = $1, email = $2 WHERE id = $3',
+  [req.body.pic, req.body.email, req.params.id])
+  .then(() => {
+    res.status(202).json({
+      message:"profile has been updated",
+      status: 202
+    })
+    .catch((err) => {
+      res.json({
+        status: 500,
+        message: "update profile didnt work on backend",
+        err : err
+      })
+    })
+  })
+}
+
 
 module.exports = {
   newUser,
   allUsers,
   addToContacts,
   viewContacts,
-  changeRoom
+  changeRoom,
+  updateProfile
 }
 
 //

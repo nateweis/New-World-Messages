@@ -1,7 +1,7 @@
 const db = require('../db/db_connection.js')
 
 const getRoomsMessages = (req,res) => {
-  db.any('SELECT * FROM messages')
+  db.any('SELECT messages.*, users.pic FROM messages JOIN users ON messages.user_id = users.id ORDER BY messages.id ASC')
   .then((data) => {
     res.status(200).json(data)
   })
