@@ -81,7 +81,7 @@ io.on('connection',(socket) => {
   socket.on('message',(newMessage) => {
     db.none('INSERT INTO messages (chat_id,sender,message,user_id) VALUES (${chat_id},${sender},${msg},${user_id})', newMessage)
     .then(() => {
-      db.one('SELECT * FROM messages ORDER BY id DESC LIMIT 1;')
+      db.one('SELECT messages.*, users.pic FROM messages JOIN users ON messages.user_id = users.id ORDER BY messages.id DESC LIMIT 1;')
       .then((data) => {
         console.log(data);
         io.to(currentRoom).emit('chat', data)

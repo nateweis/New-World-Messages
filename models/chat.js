@@ -70,8 +70,90 @@ const combineUserToNewChat = (chat_id, user_id ,res) => {
     }
   }
 
+  // removing chat alltogether
+  const removeChat = (req,res) => {
+    db.none('DELETE FROM chats WHERE id = $1', req.params.id)
+    .then(() => {
+      db.none('DELETE FROM chat_users WHERE chat_id = $1', req.params.id)
+      .then(() => {
+        db.none('DELETE FROM messages WHERE chat_id = $1', req.params.id)
+        .then(() => {
+          res.status(200).json({message:"removed chat"})
+        })
+        .catch(() => {
+          console.log("somting wrong in remove chat");
+        })
+      })
+    })
+  }
+
+  // renaming the chat
+  const renameChat = (req,res) => {
+    db.none('UPDATE chats SET chat = ${chat} WHERE id = ${id}', req.body)
+    .then(() => {
+      db.one('SELECT users.*, chats.chat, chat_users.admin, chat_users.chat_id FROM users JOIN chat_users ON users.id = chat_users.user_id JOIN chats ON chat_users.chat_id = chats.id WHERE chats.id = $1;',
+      req.body.id)
+      .then((data) => {
+        res.json({
+          status:200,
+          message:'Successfull',
+          data:data
+        })
+      })
+      .catch((err) => {
+        res.json({
+          status:500,
+          err:err,
+          message:"in renameChat"
+        })
+      })
+    })
+  }
+
+  // getting the members of the chats info
+  const getChatParticipants = (req,res) => {
+    db.any('SELECT users.* FROM users JOIN chat_users ON users.id = chat_users.user_id WHERE chat_users.chat_id = $1',
+    req.params.id)
+    .then((data) => {
+      res.status(200).json(data)
+    })
+    .catch((err) => {
+      ses.status(500).json({
+        err: err,
+        message: "couldnt get the members of the chat ",
+        status: 500
+      })
+    })
+  }
+
+  // kick member out of chat room
+  const kickOutOfChat = (req,res) => {
+    db.none('DELETE FROM chat_users WHERE user_id = $1 AND chat_id = $2',
+    [req.body.user,req.body.chat])
+    .then(() => {
+      res.status(200).json({
+        message:"delete Successfull",
+        status: 200
+      })
+    })
+    .catch((err) => {
+      res.status(500).json({
+        message:"problem removing user",
+        status:500,
+        err:err
+      })
+    })
+  }
+
+
+
+
 module.exports = {
   newChat,
   getUsersChats,
-  addManyUsers
+  addManyUsers,
+  removeChat,
+  renameChat,
+  getChatParticipants,
+  kickOutOfChat
 }

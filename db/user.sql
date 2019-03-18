@@ -8,6 +8,7 @@ CREATE TABLE users (
   username VARCHAR(32),
   password TEXT,
   current_room INT,
+  email VARCHAR(50),
   pic TEXT
 );
 
