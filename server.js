@@ -32,7 +32,7 @@ const corsOption = {
   origin:'https://nwmessages.herokuapp.com/',
   credentials: true
 }
-// app.use(cors(corsOption))
+app.use(cors(corsOption))
 app.use(express.json())
 // app.use(express.static('public'));
 app.use(session({
