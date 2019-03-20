@@ -34,7 +34,8 @@ const editOneMessage = (req,res) => {
   db.none('UPDATE messages SET message = $1 WHERE id = $2',
   [req.body.edit, req.params.id])
   .then(() => {
-    db.one('SELECT * FROM messages WHERE id = $1', req.params.id)
+    db.one('SELECT messages.*, users.pic FROM messages JOIN users ON messages.user_id = users.id WHERE messages.id = $1',
+    req.params.id)
     .then((data) => {
       res.json({
         message:"message edited",
